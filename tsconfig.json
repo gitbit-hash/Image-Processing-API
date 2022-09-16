@@ -101,6 +101,6 @@
   "exclude": [
     "node_modules",
     "spec",
-    "build"
+    "./dist"
   ]
 }
