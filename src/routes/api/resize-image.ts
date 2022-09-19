@@ -1,20 +1,31 @@
 import { Request, Response, Router } from 'express';
-import { promises as fs } from 'fs';
-import path from 'path';
+
+import { resizeImage } from '../../utils/processImage';
+import { exists } from '../../utils/validators';
 
 const resizeImageRouter = Router();
 
 resizeImageRouter.get('/', async (req: Request, res: Response) => {
-  const { filename } = req.query;
-  const filePath = path.join(
-    process.cwd() + `/src/assets/full/${filename}.jpg`
-  );
+  const { filename, width, height } = req.query;
+
+  const { isFileExists, filePath } = await exists(filename as string);
 
   try {
-    const file = await fs.readFile(filePath)
-    res.end(file)
+    if (isFileExists) {
+      const image = await resizeImage(
+        filePath!,
+        width as string,
+        height as string
+      );
+
+      res.end(image);
+    } else {
+      throw new Error("File doesn't exist");
+    }
   } catch (err) {
-    res.status(404).send("<h1>File doesn't exist</h1>")
+    if (err instanceof Error) {
+      res.status(404).send(`<h1>Error: ${err.message}</h1>`);
+    }
   }
 });
 
