@@ -19,7 +19,7 @@ app.use('/api', routes);
 // add routing for / path
 app.get('/', (req: Request, res: Response) => {
   res.json({
-    message: 'Hello World 🌍',
+    message: 'Welcome to the Image resize API',
   });
 });
 
