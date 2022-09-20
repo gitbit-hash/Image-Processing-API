@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 
 import { resizeImage } from '../../utils/processImage';
+import { saveResizedImage } from '../../utils/saveResizedImage';
 import { exists } from '../../utils/validators';
 
 const resizeImageRouter = Router();
@@ -12,13 +13,14 @@ resizeImageRouter.get('/', async (req: Request, res: Response) => {
 
   try {
     if (isFileExists) {
-      const image = await resizeImage(
+      const { data, heightInt, widthInt } = await resizeImage(
         filePath!,
         width as string,
         height as string
       );
+      await saveResizedImage(data, filename as string, widthInt, heightInt);
 
-      res.end(image);
+      res.end(data);
     } else {
       throw new Error("File doesn't exist");
     }

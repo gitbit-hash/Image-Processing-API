@@ -5,7 +5,7 @@ export const resizeImage = async (
   filePath: string,
   width: string,
   height: string
-): Promise<Buffer> => {
+): Promise<{ data: Buffer; widthInt: number; heightInt: number }> => {
   const { widthInt, heightInt } = checkWidthAndHeight(width, height);
 
   const data = await sharp(filePath)
@@ -13,5 +13,9 @@ export const resizeImage = async (
     .jpeg()
     .toBuffer();
 
-  return data;
+  return {
+    data,
+    widthInt,
+    heightInt,
+  };
 };
