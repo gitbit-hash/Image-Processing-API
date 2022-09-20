@@ -20,20 +20,28 @@ export async function exists(filename: string) {
 }
 
 export const checkWidthAndHeight = (width: string, height: string) => {
+  if (width === undefined || height === undefined) {
+    throw new Error('You must specify the width and the height parameters of your Image');
+  }
+
+  if (width === '' || height === '') {
+    throw new Error('Width or height parameter is empty, please provide a positive integer number');
+  }
+
   const widthInt = +width;
   const heightInt = +height;
 
   if (!widthInt || !heightInt) {
-    throw new Error('You must specify the width and the height of your Image');
+    throw new Error('Invalid width or height value, please provide a positive integer number');
   }
 
-  if (!(widthInt && widthInt > 0)) {
+  if (widthInt < 0) {
     throw new Error(
       'Width is not a valid positive number, Please check your entered width value'
     );
   }
 
-  if (!(heightInt && heightInt > 0)) {
+  if (heightInt < 0) {
     throw new Error(
       'height is not a valid positive number, Please check your entered height value'
     );
