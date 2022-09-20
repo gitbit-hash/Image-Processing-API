@@ -2,9 +2,14 @@ import { promises as fs } from 'fs';
 import path from 'path';
 
 export async function exists(filename: string) {
-  const filePath = path.join(
-    process.cwd() + `/src/assets/full/${filename}.jpg`
-  );
+  let filePath = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    filePath = path.join(process.cwd() + `/src/assets/full/${filename}.jpg`);
+  } else {
+    filePath = path.join(process.cwd() + `/dist/assets/full/${filename}.jpg`);
+  }
+
   try {
     await fs.access(filePath);
 
@@ -21,18 +26,24 @@ export async function exists(filename: string) {
 
 export const checkWidthAndHeight = (width: string, height: string) => {
   if (width === undefined || height === undefined) {
-    throw new Error('You must specify the width and the height parameters of your Image');
+    throw new Error(
+      'You must specify the width and the height parameters of your Image'
+    );
   }
 
   if (width === '' || height === '') {
-    throw new Error('Width or height parameter is empty, please provide a positive integer number');
+    throw new Error(
+      'Width or height parameter is empty, please provide a positive integer number'
+    );
   }
 
   const widthInt = +width;
   const heightInt = +height;
 
   if (!widthInt || !heightInt) {
-    throw new Error('Invalid width or height value, please provide a positive integer number');
+    throw new Error(
+      'Invalid width or height value, please provide a positive integer number'
+    );
   }
 
   if (widthInt < 0) {

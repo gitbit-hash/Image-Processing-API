@@ -3,20 +3,30 @@ import { Request, Response, Router } from 'express';
 import { resizeImage } from '../../utils/processImage';
 import { saveResizedImage } from '../../utils/saveResizedImage';
 import { exists } from '../../utils/validators';
+import { makeFullFolder } from '../../utils/makeFullFolder';
 
 const resizeImageRouter = Router();
 
 resizeImageRouter.get('/', async (req: Request, res: Response) => {
+  await makeFullFolder();
+
   const { filename, width, height } = req.query;
 
   const { isFileExists, filePath } = await exists(filename as string);
 
   try {
-    if (filename === undefined) throw new Error('filename query parameter is required!')
+    if (filename === undefined)
+      throw new Error('filename query parameter is required!');
 
-    if (filename === '') throw new Error('filename query parameter value is missing, please provide an image name!')
+    if (filename === '')
+      throw new Error(
+        'filename query parameter value is missing, please provide an image name!'
+      );
 
-    if (!isFileExists) throw new Error('No such file was found!, make sure that your file exists in the full folder')
+    if (!isFileExists)
+      throw new Error(
+        'No such file was found!, make sure that your file exists in the full folder'
+      );
 
     if (isFileExists) {
       const { data, heightInt, widthInt } = await resizeImage(
