@@ -16,16 +16,16 @@ resizeImageRouter.get('/', async (req: Request, res: Response) => {
 
   try {
     if (filename === undefined)
-      throw new Error('filename query parameter is required!');
+      return res.status(400).send('<h1>Error: filename query parameter is required!</h1>');
 
     if (filename === '')
-      throw new Error(
-        'filename query parameter value is missing, please provide an image name!'
+      return res.status(400).send(
+        '<h1>Error: filename query parameter value is missing, please provide an image name!</h1>'
       );
 
     if (!isFileExists)
-      throw new Error(
-        'No such file was found!, make sure that your file exists in the full folder'
+      return res.status(404).send(
+        '<h1>Error: No such file was found!, make sure that your file exists in the full folder</h1>'
       );
 
     if (isFileExists) {
