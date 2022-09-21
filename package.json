@@ -8,8 +8,8 @@
     "format": "prettier --config .prettierrc --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "start": "set NODE_ENV=development&& nodemon --watch \"./**/*.ts\" --exec \"ts-node\" ./src/index.ts",
-    "start:prod": "set NODE_ENV=production&& npm run build && node dist/index.js",
+    "start": "nodemon --watch \"./**/*.ts\" --exec \"ts-node\" ./src/index.ts",
+    "start:prod": "npm run build && node dist/index.js",
     "test": "npm run build && jasmine"
   },
   "keywords": [],
