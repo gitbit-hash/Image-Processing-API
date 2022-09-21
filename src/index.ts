@@ -6,7 +6,7 @@ import routes from './routes/index';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // create an instance server
 const app: Application = express();
