@@ -1,4 +1,4 @@
-# Weather Journal App with Asynchronous JavaScript
+# Image Resize API
 
 ## Table of Contents
 
