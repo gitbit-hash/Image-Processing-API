@@ -48,7 +48,7 @@ Then you can download a project successfully
 
 7. In the root of the project folder run `npm i` to install all the required dependencies.
 
-8. In your terminal run `npm start` to run the development server, and you can test in your browser your application is running by visiting `http://localhost:5000/`.
+8. In your terminal run `npm start` to run the development server, and you can test in your browser your application is running by visiting `http://localhost:3000/`.
 
 9. Supply the image name, width, and height in order to the following URL `http://localhost:5000/api/resize-image?filename=imagename&width=number&height=number`
 
