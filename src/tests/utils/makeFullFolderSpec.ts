@@ -1,5 +1,6 @@
 import supertest from 'supertest';
 import fs from 'fs';
+import path from 'path';
 
 import app from '../../index';
 import { makeFullFolder } from '../../utils/makeFullFolder';
@@ -13,9 +14,11 @@ describe('makeFullFolder function', () => {
 
   it('should make the full folder', async () => {
     await request.get('/api/resize-image');
-    const isFullFolderExist = fs.existsSync(
-      process.cwd() + `/dist/assets/full`
-    );
+
+    const folderPath = path.join(__dirname, `../../../assets/full`);
+
+    const isFullFolderExist = fs.existsSync(folderPath);
+
     expect(isFullFolderExist).toBe(true);
   });
 });
