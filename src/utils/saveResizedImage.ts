@@ -7,15 +7,10 @@ export const saveResizedImage = async (
   width: number,
   height: number
 ) => {
-  let resizePath = '';
-
-  if (process.env.NODE_ENV === 'development') {
-    resizePath = path.join(process.cwd() + `/src/assets/thumb`);
-  } else {
-    resizePath = path.join(process.cwd() + `/dist/assets/thumb`);
-  }
+  const resizePath = path.join(__dirname, `../../assets/thumbs`);
 
   await fs.mkdir(resizePath, { recursive: true });
+
   await fs.appendFile(
     `${resizePath}/${filename}_W${width}_H${height}.jpg`,
     imageBuffer

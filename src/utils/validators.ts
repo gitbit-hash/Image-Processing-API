@@ -2,13 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 
 export async function exists(filename: string) {
-  let filePath = '';
-
-  if (process.env.NODE_ENV === 'development') {
-    filePath = path.join(process.cwd() + `/src/assets/full/${filename}.jpg`);
-  } else {
-    filePath = path.join(process.cwd() + `/dist/assets/full/${filename}.jpg`);
-  }
+  const filePath = path.join(__dirname, `../../assets/full/${filename}.jpg`);
 
   try {
     await fs.access(filePath);
