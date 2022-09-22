@@ -18,6 +18,30 @@ export async function exists(filename: string) {
   }
 }
 
+export async function isResizeImageExists(
+  filename: string,
+  width: string,
+  height: string
+) {
+  const filePath = path.join(
+    __dirname,
+    `../../assets/thumbs/${filename}_W${width}_H${height}.jpg`
+  );
+
+  try {
+    await fs.access(filePath);
+
+    return {
+      isFileExists: true,
+      filePath,
+    };
+  } catch {
+    return {
+      isFileExists: false,
+    };
+  }
+}
+
 export const checkWidthAndHeight = (width: string, height: string) => {
   if (width === undefined || height === undefined) {
     throw new Error(

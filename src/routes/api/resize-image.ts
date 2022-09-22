@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 
 import { resizeImage } from '../../utils/processImage';
 import { saveResizedImage } from '../../utils/saveResizedImage';
-import { exists } from '../../utils/validators';
+import { exists, isResizeImageExists } from '../../utils/validators';
 import { makeFullFolder } from '../../utils/makeFullFolder';
 
 const resizeImageRouter = Router();
@@ -35,6 +35,19 @@ resizeImageRouter.get('/', async (req: Request, res: Response) => {
         );
 
     if (isFileExists) {
+      const { isFileExists: resizedImageExists, filePath: resizedImagePath } =
+        await isResizeImageExists(
+          filename as string,
+          width as string,
+          height as string
+        );
+
+      if (resizedImageExists) {
+        if (resizedImagePath) {
+          return res.sendFile(resizedImagePath);
+        }
+      }
+
       const { data, heightInt, widthInt } = await resizeImage(
         filePath!,
         width as string,
